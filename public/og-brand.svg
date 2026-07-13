@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#F6F1E8"/>
+  <rect x="0" y="0" width="1200" height="12" fill="#21313C"/>
+  <g transform="translate(120,210)" fill="#21313C">
+    <path d="M18 14h14c7.2 0 12 3.8 12 10.2 0 4.2-2.2 7.4-6.1 9l7.1 12.8h-8.2l-6.4-11.8H26V46h-8V14zm8 13.4h5.4c3.1 0 4.9-1.5 4.9-4s-1.8-4-4.9-4H26v8z"/>
+    <path d="M58 14h22c10.4 0 17.4 6.4 17.4 16s-7 16-17.4 16H58V14zm8 24.2h13.4c5.8 0 9.5-3.5 9.5-8.2s-3.7-8.2-9.5-8.2H66v16.4z"/>
+    <circle cx="46" cy="18" r="2.2"/>
+  </g>
+  <text x="240" y="270" fill="#21313C" font-family="ui-sans-serif, system-ui, sans-serif" font-size="72" font-weight="700" letter-spacing="0.08em">BRIGHTDESK</text>
+  <text x="240" y="330" fill="#3E6673" font-family="ui-sans-serif, system-ui, sans-serif" font-size="28" letter-spacing="0.2em">SUPPLIES LLC</text>
+  <text x="240" y="420" fill="#62696D" font-family="ui-sans-serif, system-ui, sans-serif" font-size="32">Work clearly. Live comfortably.</text>
+  <text x="240" y="480" fill="#8FA494" font-family="ui-sans-serif, system-ui, sans-serif" font-size="24">Bronx, New York</text>
+</svg>

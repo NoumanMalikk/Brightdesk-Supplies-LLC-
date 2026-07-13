@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  --color-blueprint-ink: #21313c;
+  --color-workspace-blue: #3e6673;
+  --color-birch-light: #d8c7a8;
+  --color-soft-moss: #8fa494;
+  --color-upholstery-rust: #a75f48;
+  --color-signal-coral: #d97863;
+  --color-drafting-yellow: #ddba57;
+  --color-paper-cream: #f6f1e8;
+  --color-gallery-white: #ffffff;
+  --color-soft-graphite: #62696d;
+  --color-border-stone: #d7d0c5;
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-paper-cream text-blueprint-ink antialiased;
+    font-family: var(--font-body);
+    background-image:
+      linear-gradient(180deg, #f6f1e8 0%, #f3eee4 45%, #efe8dc 100%),
+      radial-gradient(ellipse at top left, rgba(216, 199, 168, 0.35), transparent 45%),
+      radial-gradient(ellipse at top right, rgba(62, 102, 115, 0.08), transparent 40%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-workspace-blue);
+    outline-offset: 2px;
+  }
+
+  .font-measure {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .draft-grid {
+    background-image:
+      linear-gradient(to right, rgba(33, 49, 60, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(33, 49, 60, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+}

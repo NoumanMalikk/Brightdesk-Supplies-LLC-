@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120" role="img" aria-label="Brightdesk Supplies LLC">
+  <title>Brightdesk Supplies LLC</title>
+  <path fill="currentColor" d="M78 18h18c8 0 13.5 4.2 13.5 11.2 0 4.6-2.4 8.1-6.7 9.8l7.8 14H102l-7-12.8H90V62H78V18zm10 14.8h6c3.4 0 5.4-1.6 5.4-4.3s-2-4.3-5.4-4.3h-6v8.6z"/>
+  <path fill="currentColor" d="M118 18h24c11.4 0 19 7 19 17.5S153.4 53 142 53h-24V18zm10 26.5h13.2c6.3 0 10.3-3.7 10.3-9s-4-9-10.3-9H128v18z"/>
+  <circle cx="108" cy="22" r="2.4" fill="currentColor"/>
+  <path d="M70 78h80" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+  <text x="110" y="72" text-anchor="middle" fill="currentColor" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700" letter-spacing="0.1em">BRIGHTDESK</text>
+  <text x="110" y="98" text-anchor="middle" fill="currentColor" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="500" letter-spacing="0.28em" opacity="0.75">SUPPLIES LLC</text>
+</svg>
