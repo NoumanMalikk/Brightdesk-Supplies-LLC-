@@ -2,11 +2,12 @@
 
 import { useMemo, useState } from "react";
 import { useCartStore } from "@/store/cart-store";
-import { cartSubtotal } from "@/lib/cart-calculations";
+import { cartSubtotal, lineTotal } from "@/lib/cart-calculations";
 import { formatPrice } from "@/lib/format";
 import { calculateDemoShipping } from "@/lib/shipping";
 import { storeConfig } from "@/data/store-config";
 import { Button } from "@/components/ui/button";
+import { ProductImage } from "@/components/product/product-image";
 import Link from "next/link";
 
 const steps = ["Customer", "Shipping", "Access", "Review", "Payment"] as const;
@@ -179,180 +180,246 @@ export default function CheckoutPage() {
     );
   }
 
+  const itemCount = lines.reduce((sum, line) => sum + line.quantity, 0);
+
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 md:px-6">
+    <div className="mx-auto max-w-6xl px-4 py-12 md:px-6">
       <h1 className="font-display text-4xl font-semibold">Checkout</h1>
       <p className="mt-2 text-sm text-soft-graphite">
         Store mode: {storeConfig.storeMode}. Card details are never collected in ordinary form fields.
         {storeConfig.storeMode === "demo" && " Stripe test mode / demonstration checkout."}
       </p>
-      <ol className="mt-6 flex flex-wrap gap-2" aria-label="Checkout steps">
-        {steps.map((s, i) => {
-          const locked = i > maxReachableStep;
-          const active = i === step;
-          return (
-            <li key={s}>
-              <button
-                type="button"
-                disabled={locked}
-                aria-current={active ? "step" : undefined}
-                aria-disabled={locked}
-                className={`rounded-full px-3 py-1 text-sm transition-colors ${
-                  active
-                    ? "bg-blueprint-ink text-paper-cream"
-                    : locked
-                      ? "cursor-not-allowed bg-border-stone/25 text-soft-graphite/50"
-                      : "bg-border-stone/40 text-blueprint-ink hover:bg-border-stone/60"
-                }`}
-                onClick={() => goToStep(i)}
-              >
-                {i + 1}. {s}
-              </button>
-            </li>
-          );
-        })}
-      </ol>
 
-      <div className="mt-8 space-y-4 rounded-xl border border-border-stone bg-gallery-white p-6">
-        {step === 0 && (
-          <>
-            {(["email", "firstName", "lastName", "phone", "companyName", "purchaseOrderReference"] as const).map((key) => (
-              <div key={key}>
-                <label className="text-sm font-medium" htmlFor={key}>
-                  {fieldLabels[key]}
-                </label>
-                <input
-                  id={key}
-                  type={key === "email" ? "email" : key === "phone" ? "tel" : "text"}
-                  className="mt-1 h-11 w-full rounded-md border border-border-stone px-3"
-                  value={form[key]}
-                  onChange={(e) => update(key, e.target.value)}
-                  required={!["companyName", "purchaseOrderReference"].includes(key)}
-                />
-              </div>
-            ))}
-          </>
-        )}
-        {step === 1 && (
-          <>
-            {(["line1", "line2", "city", "state", "postalCode"] as const).map((key) => (
-              <div key={key}>
-                <label className="text-sm font-medium" htmlFor={key}>
-                  {fieldLabels[key]}
-                </label>
-                <input
-                  id={key}
-                  className="mt-1 h-11 w-full rounded-md border border-border-stone px-3"
-                  value={form[key]}
-                  onChange={(e) => update(key, e.target.value)}
-                  required={key !== "line2"}
-                />
-              </div>
-            ))}
-            <p className="text-sm text-soft-graphite">Country: United States</p>
-          </>
-        )}
-        {step === 2 && (
-          <>
-            <p className="text-sm text-soft-graphite">
-              Delivery-access fields are collected for shipping method planning. No specific delivery service is promised.
-            </p>
-            {(["buildingType", "floorLevel", "restrictedAccess", "deliveryContactPhone"] as const).map((key) => (
-              <div key={key}>
-                <label className="text-sm font-medium" htmlFor={key}>
-                  {fieldLabels[key]}
-                </label>
-                <input
-                  id={key}
-                  className="mt-1 h-11 w-full rounded-md border border-border-stone px-3"
-                  value={form[key]}
-                  onChange={(e) => update(key, e.target.value)}
-                />
-              </div>
-            ))}
-          </>
-        )}
-        {step === 3 && (
-          <>
-            <ul className="space-y-2 text-sm">
-              {lines.map((l) => (
-                <li key={l.productId + l.finishId}>
-                  {l.quantity} x {l.title} - {formatPrice(l.unitPrice * l.quantity)}
+      <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div>
+          <ol className="flex flex-wrap gap-2" aria-label="Checkout steps">
+            {steps.map((s, i) => {
+              const locked = i > maxReachableStep;
+              const active = i === step;
+              return (
+                <li key={s}>
+                  <button
+                    type="button"
+                    disabled={locked}
+                    aria-current={active ? "step" : undefined}
+                    aria-disabled={locked}
+                    className={`rounded-full px-3 py-1 text-sm transition-colors ${
+                      active
+                        ? "bg-blueprint-ink text-paper-cream"
+                        : locked
+                          ? "cursor-not-allowed bg-border-stone/25 text-soft-graphite/50"
+                          : "bg-border-stone/40 text-blueprint-ink hover:bg-border-stone/60"
+                    }`}
+                    onClick={() => goToStep(i)}
+                  >
+                    {i + 1}. {s}
+                  </button>
                 </li>
-              ))}
-            </ul>
-            <p>Subtotal: {formatPrice(subtotal)}</p>
-            <p>
-              {shipping.label}: {shipping.amount === null ? "Quote required" : formatPrice(shipping.amount)}
-            </p>
-            <p className="text-xs text-soft-graphite">{shipping.note}</p>
-            {shipping.type === "demonstration" && <p>Estimated tax (demo): {formatPrice(taxEstimate)}</p>}
-            <p className="font-semibold">
-              Estimated total: {shipping.type === "quote-required" ? "Pending quote" : formatPrice(total)}
-            </p>
-            {(
-              [
-                "termsAcknowledged",
-                "privacyAcknowledged",
-                "dimensionsReviewed",
-                "doorwayAccessReviewed",
-                "finishUpholsteryConfirmed",
-                "assemblyReviewed",
-              ] as const
-            ).map((key) => (
-              <label key={key} className="flex items-start gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  checked={form[key]}
-                  onChange={(e) => update(key, e.target.checked)}
-                  className="mt-1"
-                />
-                <span>{fieldLabels[key]}</span>
-              </label>
-            ))}
-            <label className="flex items-start gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={form.marketingConsent}
-                onChange={(e) => update("marketingConsent", e.target.checked)}
-                className="mt-1"
-              />
-              <span>Optional marketing consent (unchecked by default)</span>
-            </label>
-          </>
-        )}
-        {step === 4 && (
-          <div>
-            <p className="text-sm text-soft-graphite">
-              Payment uses Stripe Checkout or Payment Element. Ordinary inputs never collect card numbers.
-            </p>
-            <Button className="mt-4" disabled={loading} onClick={startPayment}>
-              {loading
-                ? "Starting secure payment..."
-                : storeConfig.storeMode === "demo"
-                  ? "Continue to demo payment"
-                  : "Pay securely"}
-            </Button>
+              );
+            })}
+          </ol>
+
+          <div className="mt-6 space-y-4 rounded-xl border border-border-stone bg-gallery-white p-6">
+            {step === 0 && (
+              <>
+                {(["email", "firstName", "lastName", "phone", "companyName", "purchaseOrderReference"] as const).map(
+                  (key) => (
+                    <div key={key}>
+                      <label className="text-sm font-medium" htmlFor={key}>
+                        {fieldLabels[key]}
+                      </label>
+                      <input
+                        id={key}
+                        type={key === "email" ? "email" : key === "phone" ? "tel" : "text"}
+                        className="mt-1 h-11 w-full rounded-md border border-border-stone px-3"
+                        value={form[key]}
+                        onChange={(e) => update(key, e.target.value)}
+                        required={!["companyName", "purchaseOrderReference"].includes(key)}
+                      />
+                    </div>
+                  ),
+                )}
+              </>
+            )}
+            {step === 1 && (
+              <>
+                {(["line1", "line2", "city", "state", "postalCode"] as const).map((key) => (
+                  <div key={key}>
+                    <label className="text-sm font-medium" htmlFor={key}>
+                      {fieldLabels[key]}
+                    </label>
+                    <input
+                      id={key}
+                      className="mt-1 h-11 w-full rounded-md border border-border-stone px-3"
+                      value={form[key]}
+                      onChange={(e) => update(key, e.target.value)}
+                      required={key !== "line2"}
+                    />
+                  </div>
+                ))}
+                <p className="text-sm text-soft-graphite">Country: United States</p>
+              </>
+            )}
+            {step === 2 && (
+              <>
+                <p className="text-sm text-soft-graphite">
+                  Delivery-access fields are collected for shipping method planning. No specific delivery service is
+                  promised.
+                </p>
+                {(["buildingType", "floorLevel", "restrictedAccess", "deliveryContactPhone"] as const).map((key) => (
+                  <div key={key}>
+                    <label className="text-sm font-medium" htmlFor={key}>
+                      {fieldLabels[key]}
+                    </label>
+                    <input
+                      id={key}
+                      className="mt-1 h-11 w-full rounded-md border border-border-stone px-3"
+                      value={form[key]}
+                      onChange={(e) => update(key, e.target.value)}
+                    />
+                  </div>
+                ))}
+              </>
+            )}
+            {step === 3 && (
+              <>
+                <p className="text-sm text-soft-graphite">
+                  Confirm your order details in the summary, then acknowledge the required statements below.
+                </p>
+                {(
+                  [
+                    "termsAcknowledged",
+                    "privacyAcknowledged",
+                    "dimensionsReviewed",
+                    "doorwayAccessReviewed",
+                    "finishUpholsteryConfirmed",
+                    "assemblyReviewed",
+                  ] as const
+                ).map((key) => (
+                  <label key={key} className="flex items-start gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={form[key]}
+                      onChange={(e) => update(key, e.target.checked)}
+                      className="mt-1"
+                    />
+                    <span>{fieldLabels[key]}</span>
+                  </label>
+                ))}
+                <label className="flex items-start gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={form.marketingConsent}
+                    onChange={(e) => update("marketingConsent", e.target.checked)}
+                    className="mt-1"
+                  />
+                  <span>Optional marketing consent (unchecked by default)</span>
+                </label>
+              </>
+            )}
+            {step === 4 && (
+              <div>
+                <p className="text-sm text-soft-graphite">
+                  Payment uses Stripe Checkout or Payment Element. Ordinary inputs never collect card numbers.
+                </p>
+                <Button className="mt-4" disabled={loading} onClick={startPayment}>
+                  {loading
+                    ? "Starting secure payment..."
+                    : storeConfig.storeMode === "demo"
+                      ? "Continue to demo payment"
+                      : "Pay securely"}
+                </Button>
+              </div>
+            )}
+            {error && (
+              <p className="text-sm text-upholstery-rust" role="alert">
+                {error}
+              </p>
+            )}
+            <div className="flex justify-between pt-4">
+              <Button
+                variant="outline"
+                disabled={step === 0}
+                onClick={() => {
+                  setError("");
+                  setStep((s) => s - 1);
+                }}
+              >
+                Back
+              </Button>
+              {step < steps.length - 1 && <Button onClick={continueNext}>Continue</Button>}
+            </div>
           </div>
-        )}
-        {error && (
-          <p className="text-sm text-upholstery-rust" role="alert">
-            {error}
-          </p>
-        )}
-        <div className="flex justify-between pt-4">
-          <Button
-            variant="outline"
-            disabled={step === 0}
-            onClick={() => {
-              setError("");
-              setStep((s) => s - 1);
-            }}
-          >
-            Back
-          </Button>
-          {step < steps.length - 1 && <Button onClick={continueNext}>Continue</Button>}
         </div>
+
+        <aside className="h-fit rounded-xl border border-border-stone bg-gallery-white p-5 lg:sticky lg:top-28" aria-label="Order summary">
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 className="font-display text-xl font-semibold">Your order</h2>
+            <Link href="/cart" className="text-sm text-workspace-blue underline-offset-2 hover:underline">
+              Edit cart
+            </Link>
+          </div>
+          <p className="mt-1 text-sm text-soft-graphite">
+            {itemCount} {itemCount === 1 ? "item" : "items"}
+          </p>
+
+          <ul className="mt-5 max-h-[28rem] space-y-4 overflow-y-auto pr-1">
+            {lines.map((line) => {
+              const variant = [line.finishLabel, line.upholsteryLabel, line.orientationLabel]
+                .filter(Boolean)
+                .join(" · ");
+              return (
+                <li key={`${line.productId}-${line.finishId}-${line.upholsteryId}-${line.orientationId}`} className="flex gap-3 border-b border-border-stone pb-4 last:border-b-0">
+                  <div className="h-20 w-20 shrink-0 overflow-hidden rounded-md border border-border-stone bg-paper-cream">
+                    <ProductImage src={line.imagePath} alt={line.title} title={line.title} sizes="80px" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium leading-snug">{line.title}</p>
+                    <p className="mt-0.5 font-measure text-xs text-soft-graphite">{line.sku}</p>
+                    {variant && <p className="mt-0.5 text-xs text-soft-graphite">{variant}</p>}
+                    <p className="mt-0.5 font-measure text-xs text-soft-graphite">
+                      W {line.width ?? "-"} × D {line.depth ?? "-"} × H {line.height ?? "-"}
+                    </p>
+                    <div className="mt-2 flex items-center justify-between gap-2 text-sm">
+                      <span className="text-soft-graphite">Qty {line.quantity}</span>
+                      <span className="font-semibold">{formatPrice(lineTotal(line))}</span>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+
+          <dl className="mt-5 space-y-2 border-t border-border-stone pt-4 text-sm">
+            <div className="flex justify-between gap-3">
+              <dt className="text-soft-graphite">Subtotal</dt>
+              <dd className="font-medium">{formatPrice(subtotal)}</dd>
+            </div>
+            <div className="flex justify-between gap-3">
+              <dt className="text-soft-graphite">Shipping</dt>
+              <dd className="font-medium text-right">
+                {shipping.type === "quote-required"
+                  ? "Quote required"
+                  : shipping.amount === null
+                    ? "-"
+                    : formatPrice(shipping.amount)}
+              </dd>
+            </div>
+            {shipping.type === "demonstration" && (
+              <div className="flex justify-between gap-3">
+                <dt className="text-soft-graphite">Estimated tax (demo)</dt>
+                <dd className="font-medium">{formatPrice(taxEstimate)}</dd>
+              </div>
+            )}
+            <div className="flex justify-between gap-3 border-t border-border-stone pt-3 text-base">
+              <dt className="font-semibold">Estimated total</dt>
+              <dd className="font-semibold">
+                {shipping.type === "quote-required" ? "Pending quote" : formatPrice(total)}
+              </dd>
+            </div>
+          </dl>
+          <p className="mt-3 text-xs text-soft-graphite">{shipping.note}</p>
+        </aside>
       </div>
     </div>
   );
