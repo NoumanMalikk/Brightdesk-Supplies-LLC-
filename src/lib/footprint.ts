@@ -25,9 +25,9 @@ export function estimateCombinedFootprint(
 export function footprintBandLabel(band: Product["footprintBand"]): string {
   const labels: Record<Product["footprintBand"], string> = {
     "under-30": "Under 30 inches wide",
-    "30-42": "30–42 inches wide",
-    "43-60": "43–60 inches wide",
-    "61-72": "61–72 inches wide",
+    "30-42": "30-42 inches wide",
+    "43-60": "43-60 inches wide",
+    "61-72": "61-72 inches wide",
     "over-72": "Over 72 inches wide",
     "wall-mounted": "Wall-mounted",
     "multi-piece-seating": "Multi-piece seating",

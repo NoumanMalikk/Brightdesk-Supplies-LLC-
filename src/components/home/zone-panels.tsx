@@ -26,7 +26,7 @@ export function ZonePanels() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 md:px-6" aria-labelledby="zones-heading">
       <h2 id="zones-heading" className="font-display text-3xl font-semibold md:text-4xl">Five functional zones</h2>
-      <p className="mt-3 max-w-2xl text-soft-graphite">Furniture organized around activities — not a warehouse catalog of unrelated desks and sofas.</p>
+      <p className="mt-3 max-w-2xl text-soft-graphite">Furniture organized around activities - not a warehouse catalog of unrelated desks and sofas.</p>
       <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {functionalZones.map((zone, i) => (
           <motion.div

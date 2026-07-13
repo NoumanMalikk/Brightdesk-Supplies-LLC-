@@ -42,7 +42,7 @@ export default function HomePage() {
                       <Link href={`/products/${p.slug}`} className="text-sm hover:underline">
                         <span className="font-medium">{p.title}</span>
                         <span className="mt-0.5 block font-measure text-xs text-soft-graphite">
-                          W {typeof p.width === "number" ? `${p.width}"` : "—"} · {p.functionalZones[0]}
+                          W {typeof p.width === "number" ? `${p.width}"` : "-"} · {p.functionalZones[0]}
                         </span>
                       </Link>
                     </li>
@@ -96,16 +96,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      <CollectionStrip id="meet-collection" title="Meet collection" copy="Shared surfaces and seating for conversation. Compare width, depth and assembly requirements — seating capacity only when verified." skus={meetSkus} />
+      <CollectionStrip id="meet-collection" title="Meet collection" copy="Shared surfaces and seating for conversation. Compare width, depth and assembly requirements - seating capacity only when verified." skus={meetSkus} />
       <CollectionStrip id="soft-landing" title="Furniture for the moments between tasks." copy="Lounge chairs, loveseats, benches, ottomans and reading chairs. Comfort and durability claims require verification." skus={softSkus} accent="rust" />
-      <CollectionStrip id="welcome-collection" title="Welcome collection" copy="Reception groupings shown as examples. Add each item separately — professional reception planning is not claimed." skus={welcomeSkus} />
+      <CollectionStrip id="welcome-collection" title="Welcome collection" copy="Reception groupings shown as examples. Add each item separately - professional reception planning is not claimed." skus={welcomeSkus} />
       <CollectionStrip id="storage-architecture" title="Storage as architecture" copy="Pedestals, credenzas, cabinets, bookcases and dividers with exact product dimensions. Load capacities require verification." skus={storageSkus} />
 
       <section className="mx-auto max-w-7xl px-4 py-16 md:px-6" aria-labelledby="crossover-heading">
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div>
             <h2 id="crossover-heading" className="font-display text-3xl font-semibold md:text-4xl">One room can do more than one job.</h2>
-            <p className="mt-4 text-soft-graphite">Pieces that can support both office and residential use when their verified functions allow — without invented multifunctionality claims.</p>
+            <p className="mt-4 text-soft-graphite">Pieces that can support both office and residential use when their verified functions allow - without invented multifunctionality claims.</p>
             <ButtonLink href="/zones/reset" className="mt-6" variant="outline">Explore Reset zone</ButtonLink>
           </div>
           {/* crossoverSkus used below */}

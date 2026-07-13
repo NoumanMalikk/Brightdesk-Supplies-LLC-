@@ -32,7 +32,7 @@ export default function CartPage() {
                     <Link href={`/products/${line.slug}`} className="font-medium hover:underline">{line.title}</Link>
                     <p className="font-measure text-xs text-soft-graphite">{line.sku}</p>
                     <p className="text-xs text-soft-graphite">{[line.finishLabel, line.upholsteryLabel, line.orientationLabel].filter(Boolean).join(" · ")}</p>
-                    <p className="font-measure text-xs text-soft-graphite">W {line.width ?? "—"} × D {line.depth ?? "—"} × H {line.height ?? "—"} · Boxes: {line.boxCount ?? "Verification required"}</p>
+                    <p className="font-measure text-xs text-soft-graphite">W {line.width ?? "-"} × D {line.depth ?? "-"} × H {line.height ?? "-"} · Boxes: {line.boxCount ?? "Verification required"}</p>
                     <p className="text-xs text-soft-graphite">Shipping: {line.shippingClass} · Assembly: {String(line.assemblyRequired)}</p>
                     <div className="mt-2 flex flex-wrap gap-3">
                       <input type="number" min={1} max={99} value={line.quantity} className="h-10 w-16 rounded border px-2" onChange={(e) => updateQuantity(line.productId, Number(e.target.value), key)} aria-label={`Quantity for ${line.title}`} />

@@ -9,7 +9,7 @@ export const faqs: FaqItem[] = [
     id: "faq-1",
     question: "How is the catalog organized?",
     answer:
-      "Brightdesk organizes furniture around functional zones—Focus, Meet, Store, Welcome and Reset—as well as by furniture type and room. The goal is to help you browse by what needs to happen in the room.",
+      "Brightdesk organizes furniture around functional zones - Focus, Meet, Store, Welcome and Reset - as well as by furniture type and room. The goal is to help you browse by what needs to happen in the room.",
   },
   {
     id: "faq-2",
@@ -45,7 +45,7 @@ export const faqs: FaqItem[] = [
     id: "faq-7",
     question: "How should I measure before ordering?",
     answer:
-      "Measure the room, doorway, hallway, stair and elevator route—not only the destination space. Review package dimensions and assembly clearance. Fitting guidance is informational and does not guarantee fit.",
+      "Measure the room, doorway, hallway, stair and elevator route - not only the destination space. Review package dimensions and assembly clearance. Fitting guidance is informational and does not guarantee fit.",
   },
   {
     id: "faq-8",

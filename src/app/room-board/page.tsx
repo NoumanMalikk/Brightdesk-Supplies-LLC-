@@ -44,7 +44,7 @@ export default function RoomBoardPage() {
             }}
           >
             <p className="font-medium leading-tight">{item.product?.title}</p>
-            <p className="font-measure">{typeof item.product?.width === "number" ? `${item.product.width}"` : "—"}</p>
+            <p className="font-measure">{typeof item.product?.width === "number" ? `${item.product.width}"` : "-"}</p>
             <p>{item.product ? formatPrice(item.product.demoPrice) : ""}</p>
             <button type="button" className="mt-1 underline" onClick={() => remove(item.id)}>Remove</button>
           </div>

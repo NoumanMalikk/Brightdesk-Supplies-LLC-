@@ -9,7 +9,7 @@ export function formatPrice(amount: number, currency = "USD"): string {
 }
 
 export function formatInches(value: number | null | string | undefined): string {
-  if (value === null || value === undefined) return "—";
+  if (value === null || value === undefined) return "-";
   if (typeof value === "string") return value;
   return `${value}"`;
 }
@@ -18,7 +18,7 @@ export function formatDimensions(product: Pick<Product, "width" | "height" | "de
   const w = formatInches(product.width);
   const h = formatInches(product.height);
   const d = formatInches(product.depth);
-  if ([w, h, d].every((v) => v === "—" || v === "Verification required")) {
+  if ([w, h, d].every((v) => v === "-" || v === "Verification required")) {
     return "Dimensions: Verification required";
   }
   return `W ${w} × D ${d} × H ${h}`;
@@ -27,7 +27,7 @@ export function formatDimensions(product: Pick<Product, "width" | "height" | "de
 export function displayVerification(
   value: string | number | boolean | null | undefined,
 ): string {
-  if (value === null || value === undefined) return "—";
+  if (value === null || value === undefined) return "-";
   if (typeof value === "boolean") return value ? "Yes" : "No";
   if (typeof value === "number") return String(value);
   return value;

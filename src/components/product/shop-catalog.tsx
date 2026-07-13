@@ -87,7 +87,7 @@ export function ShopCatalog({ initialQuery = "" }: { initialQuery?: string }) {
     <div className="mx-auto max-w-7xl px-4 py-12 md:px-6">
       <h1 className="font-display text-4xl font-semibold">Shop furniture</h1>
       <p className="mt-3 max-w-2xl text-soft-graphite">
-        Filter by zone, category, dimensions context and assembly status. Demonstration catalog — incomplete products are blocked from live checkout.
+        Filter by zone, category, dimensions context and assembly status. Demonstration catalog - incomplete products are blocked from live checkout.
       </p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[260px_1fr]">
@@ -137,8 +137,8 @@ export function ShopCatalog({ initialQuery = "" }: { initialQuery?: string }) {
               <option value="newest">Newest catalog additions</option>
               <option value="price-asc">Price low to high</option>
               <option value="price-desc">Price high to low</option>
-              <option value="name-asc">Name A–Z</option>
-              <option value="name-desc">Name Z–A</option>
+              <option value="name-asc">Name A-Z</option>
+              <option value="name-desc">Name Z-A</option>
               <option value="width-asc">Width low to high</option>
               <option value="depth-asc">Depth low to high</option>
               <option value="height-asc">Height low to high</option>

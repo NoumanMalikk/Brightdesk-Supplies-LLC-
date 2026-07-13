@@ -29,7 +29,7 @@ export default function WorkspaceBuilderPage() {
     <div className="mx-auto max-w-7xl px-4 py-12 md:px-6">
       <h1 className="font-display text-4xl font-semibold">Workspace builder</h1>
       <p className="mt-3 max-w-2xl text-soft-graphite">
-        Combine compatible furniture using manually configured compatibility IDs. Add each product separately — no fake bundles or discounts. Footprint is an estimate only.
+        Combine compatible furniture using manually configured compatibility IDs. Add each product separately - no fake bundles or discounts. Footprint is an estimate only.
       </p>
       <p className="mt-2 rounded-md border border-drafting-yellow bg-drafting-yellow/20 p-3 text-sm">
         Confirm room, doorway and circulation dimensions before ordering.
@@ -76,7 +76,7 @@ export default function WorkspaceBuilderPage() {
         <h2 className="font-display text-2xl font-semibold">Plan summary</h2>
         <p className="mt-2 text-lg font-semibold">Combined total: {formatPrice(total)}</p>
         <p className="mt-2 font-measure text-sm text-soft-graphite">
-          Approx. footprint: W {footprint.widthInches ?? "—"}&quot; × D {footprint.depthInches ?? "—"}&quot;
+          Approx. footprint: W {footprint.widthInches ?? "-"}&quot; × D {footprint.depthInches ?? "-"}&quot;
         </p>
         <p className="mt-2 text-sm text-soft-graphite">{footprint.note}</p>
         <div className="mt-4 flex flex-wrap gap-3">

@@ -95,7 +95,7 @@ export function ProductDetail({
           <p className="mt-2 font-measure text-sm text-soft-graphite">SKU {product.sku}</p>
           <p className="mt-4 font-display text-3xl font-semibold">{formatPrice(product.demoPrice)}</p>
           {storeConfig.storeMode === "demo" && (
-            <p className="mt-1 text-sm text-drafting-yellow-foreground text-soft-graphite">Demonstration price — verification required before live purchase.</p>
+            <p className="mt-1 text-sm text-drafting-yellow-foreground text-soft-graphite">Demonstration price - verification required before live purchase.</p>
           )}
           <p className="mt-4 text-soft-graphite">{product.description}</p>
           <dl className="mt-6 grid grid-cols-2 gap-3 text-sm">
@@ -261,7 +261,7 @@ export function ProductDetail({
                 <li key={c.sku}>
                   {component ? (
                     <Link href={`/products/${component.slug}`} className="underline">
-                      {component.title} — {formatPrice(component.demoPrice)}
+                      {component.title} - {formatPrice(component.demoPrice)}
                     </Link>
                   ) : (
                     c.sku

@@ -1,6 +1,6 @@
 # Brightdesk Supplies LLC
 
-Premium customer-facing furniture e-commerce storefront for Brightdesk Supplies LLC — a Bronx, New York-based furniture business.
+Premium customer-facing furniture e-commerce storefront for Brightdesk Supplies LLC - a Bronx, New York-based furniture business.
 
 **Tagline:** Work clearly. Live comfortably.  
 **Positioning:** Furniture for the way work and life overlap.
@@ -25,12 +25,12 @@ Default mode is `demo`. Incomplete products cannot enter live checkout.
 
 ## Scripts
 
-- `npm run dev` — development server
-- `npm run build` — production build
-- `npm run lint` — ESLint
-- `npm run typecheck` — TypeScript
-- `npm test` — unit tests
-- `npm run test:e2e` — Playwright
+- `npm run dev` - development server
+- `npm run build` - production build
+- `npm run lint` - ESLint
+- `npm run typecheck` - TypeScript
+- `npm test` - unit tests
+- `npm run test:e2e` - Playwright
 
 ## Catalog
 
